@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ song.title }} Details{% endblock %}
+
+{% block content %}
+<h1>{{ song.title }}</h1>
+<p>Artist: {{ song.artist }}</p>
+<p>URL 1: <a href="{{ song.url }}" target="_blank">{{ song.url }}</a></p>
+{% if song.url2 %}
+<p>URL 2: <a href="{{ song.url2 }}" target="_blank">{{ song.url2 }}</a></p>
+{% endif %}
+<p>Details: {{ song.details }}</p>
+<p>Added on: {{ song.created_at|date:"Y-m-d H:i:s" }}</p>
+<a href="{% url 'home' %}">Back to list</a>
+{% endblock %}
