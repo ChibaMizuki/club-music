@@ -4,12 +4,13 @@
 
 {% block content %}
 <h1>{{ song.title }}</h1>
-<p>Artist: {{ song.artist }}</p>
-<p>URL 1: <a href="{{ song.url }}" target="_blank">{{ song.url }}</a></p>
-{% if song.url2 %}
-<p>URL 2: <a href="{{ song.url2 }}" target="_blank">{{ song.url2 }}</a></p>
-{% endif %}
-<p>Details: {{ song.details }}</p>
-<p>Added on: {{ song.created_at|date:"Y-m-d H:i:s" }}</p>
-<a href="{% url 'home' %}">Back to list</a>
+    <p><strong>Artist:</strong> {{ song.artist }}</p>
+    <p><strong>URL:</strong> <a href="{{ song.url }}" target="_blank" rel="noopener noreferrer">{{ song.url }}</a></p>
+    {% if song.url2 %}
+    <p><strong>URL2:</strong> <a href="{{ song.url2 }}" target="_blank" rel="noopener noreferrer">{{ song.url2 }}</a></p>
+    {% endif %}
+    <p><strong>Description:</strong> {{ song.details }}</p>
+    <p><strong>Registered At:</strong> {{ song.created_at|date:"Y-m-d" }}</p>
+    <a href="{% url 'edit' song.pk %}">Edit</a>
+    <a href="{% url 'home' %}">Back to list</a>
 {% endblock %}
