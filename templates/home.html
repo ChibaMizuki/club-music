@@ -1,21 +1,44 @@
 {% extends 'base.html' %}
 
-{% block title %}Music List{% endblock %}
+{% block title %}Song List{% endblock %}
 
 {% block content %}
-<h1>Music List</h1>
-<a href="{% url 'registration' %}">Add a new song</a>
+<h2>Song List</h2>
+<form method="get" action="">
+    <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search...">
+    <select name="sort_by">
+        <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
+        <option value="artist" {% if request.GET.sort_by == "artist" %}selected{% endif %}>Artist</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
 <ul>
     {% for song in songs %}
         <li>
-            {{ song.display_number }}: <a href="{{ song.url }}" target="_blank" rel="noopener noreferrer">{{ song.title }}</a> by {{ song.artist }}
-            <br>
-            <small>Added on: {{ song.created_at|date:"Y-m-d H:i:s" }}</small>
-            <br>
+            {{ song.display_number }}: {{ song.title }} - {{ song.artist }}
             <a href="{% url 'detail' song.pk %}">Details</a>
             <a href="{% url 'edit' song.pk %}">Edit</a>
-            <a href="{% url 'delete' song.pk %}" style="color: red;">Delete</a>
+            <a href="{% url 'delete' song.pk %}">Delete</a>
+            <a href="{{ song.url }}" target="_blank" rel="noopener noreferrer">Video</a></p>
         </li>
     {% endfor %}
 </ul>
+<a href="{% url 'create' %}"><button>Add New Song</button></a>
+
+{% if is_paginated %}
+  <div>
+    <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+    <div>
+      {% if page_obj.has_previous %}
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page=1">First</a>
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ paginator.num_pages }}">Last</a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
 {% endblock %}
