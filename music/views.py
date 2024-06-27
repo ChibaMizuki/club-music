@@ -10,7 +10,6 @@ class SongListView(ListView):
     template_name = 'home.html'
     context_object_name = 'songs'
     ordering = ['pk']  
-    paginate_by = 10
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -25,12 +24,13 @@ class SongListView(ListView):
         if form.is_valid():
             query = form.cleaned_data.get('query')
             sort_by = form.cleaned_data.get('sort_by')
+            print(form.cleaned_data)
             if query:
                 queryset = queryset.filter(
                     Q(title__icontains=query) | Q(artist__icontains=query)
                 )
             if sort_by:
-                queryset = queryset.order_by(sort_by)
+                queryset = queryset.order_by()
         return queryset
 
 
