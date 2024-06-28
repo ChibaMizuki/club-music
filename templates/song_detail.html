@@ -3,7 +3,7 @@
 {% block title %}{{ song.title }} Details{% endblock %}
 
 {% block content %}
-<h1>{{ song.title }}</h1>
+<h1>{{ song.number }}: {{ song.title }}</h1>
     <p><strong>Artist:</strong> {{ song.artist }}</p>
     <p><strong>URL:</strong> <a href="{{ song.url }}" target="_blank" rel="noopener noreferrer">{{ song.url }}</a></p>
     {% if song.url2 %}

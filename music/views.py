@@ -9,14 +9,7 @@ class SongListView(ListView):
     model = Song
     template_name = 'home.html'
     context_object_name = 'songs'
-    ordering = ['pk']  
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        songs = context['songs']
-        for index, song in enumerate(songs, start=1):
-            song.display_number = index
-        return context
+    ordering = ['number']  
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -25,12 +18,11 @@ class SongListView(ListView):
             query = form.cleaned_data.get('query')
             sort_by = form.cleaned_data.get('sort_by')
             print(form.cleaned_data)
-            if query:
-                queryset = queryset.filter(
-                    Q(title__icontains=query) | Q(artist__icontains=query)
-                )
-            if sort_by:
-                queryset = queryset.order_by()
+            if sort_by and query:
+                if sort_by == 'title':
+                    queryset = queryset.filter(title__icontains=query)
+                elif sort_by == 'artist':
+                    queryset = queryset.filter(artist__icontains=query)
         return queryset
 
 

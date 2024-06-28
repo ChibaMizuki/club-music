@@ -17,7 +17,7 @@
 <ul>
     {% for song in songs %}
         <li>
-            {{ song.display_number }}: {{ song.title }} - {{ song.artist }}
+            {{ song.number }}: {{ song.title }} - {{ song.artist }}
             <a href="{% url 'detail' song.pk %}">Details</a>
             <a href="{% url 'edit' song.pk %}">Edit</a>
             <a href="{% url 'delete' song.pk %}">Delete</a>
