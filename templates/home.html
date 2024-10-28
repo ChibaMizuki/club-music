@@ -14,6 +14,8 @@
     <button type="submit">Search</button>
 </form>
 
+<a href="{% url 'create' %}"><button>Add New Song</button></a>
+
 <ul>
     {% for song in songs %}
         <li>
@@ -25,5 +27,4 @@
         </li>
     {% endfor %}
 </ul>
-<a href="{% url 'create' %}"><button>Add New Song</button></a>
 {% endblock %}
